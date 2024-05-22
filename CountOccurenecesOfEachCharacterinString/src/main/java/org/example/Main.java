@@ -1,15 +1,18 @@
 package org.example;
 
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        String someString = "JAVA PROGRAMMER";
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a string:");
+        String someString = scanner.nextLine();
+
+        //String someString = "JAVA PROGRAMMER";
         char[] strArray = someString.toCharArray();
 
         //getting distinct characters in strArray
@@ -24,5 +27,11 @@ public class Main {
             long count = someString.chars().filter(ch -> ch == c).count();
             System.out.println("Occurances of Character '" +c+ "' : " +count);
         }
+
+        //another way
+        someString.chars() // Convert the String to an IntStream
+                .mapToObj(c -> (char) c) // Convert each int in the stream to a char
+                .collect(Collectors.groupingBy(c -> c, Collectors.counting())) // Group by character and count them
+                .forEach((character, frequency) -> System.out.println(character + ":" + frequency));
     }
 }
